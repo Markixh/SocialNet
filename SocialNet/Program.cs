@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using SocialNet.Data;
 using SocialNet.Data.Models;
+using System.Reflection;
 
 namespace SocialNet
 {
@@ -11,6 +12,10 @@ namespace SocialNet
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Подключаем автомаппинг
+            var assembly = Assembly.GetAssembly(typeof(MappingProfile));
+            builder.Services.AddAutoMapper(assembly);
 
             // Строка подключения к БД
             string? connection = Configuration.GetConnectionString("DefaultConnection");
