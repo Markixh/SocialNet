@@ -41,6 +41,16 @@
         font-size: 17px;
     }
 
+        .topnav .btn_exit:hover {
+            background-color: #5c9ce6;
+            color: black;
+        }
+
+        .topnav .btn_exit:active {
+            background-color: #2196F3;
+            color: white;
+        }
+
 .main-img {
     width: 100%;
     max-width: max-content;
