@@ -15,7 +15,9 @@ namespace SocialNet.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var mainModel = new MainViewModel();
+
+            return View(mainModel);
         }
 
         public IActionResult Privacy()
