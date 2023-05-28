@@ -130,5 +130,28 @@ namespace SocialNet.Controllers
                 return View("Edit", model);
             }
         }
+
+        [Route("UserList")]
+        [HttpPost]
+        public IActionResult UserList(string search)
+        {
+            var currentuser = User;
+
+            var list = _userManager.Users.AsEnumerable().Where(x => x.GetFullName().ToLower().Contains(search.ToLower())).ToList();
+
+            var data = new List<UserWithFriendExt>();
+            list.ForEach(x =>
+            {
+                var t = _mapper.Map<UserWithFriendExt>(x);                
+                data.Add(t);
+            });
+
+            var model = new SearchViewModel()
+            {
+                UserList = data
+            };
+
+            return View("UserList", model);
+        }
     }
 }

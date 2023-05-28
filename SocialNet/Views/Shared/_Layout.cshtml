@@ -24,7 +24,12 @@
                     <a class="btn_exit" asp-area="" asp-controller="AccountManager" asp-action="Logout">Выход</a>
                 }
                 <a asp-area="" asp-controller="Home" asp-action="Index">SocialNetwork</a>
-                <partial name="_SearchLayoutPartial" />
+                <div class="righ-align">
+                    <form asp-area="" asp-controller="AccountManager" asp-action="UserList">
+                        <i class="fa fa-search"></i>
+                        <input type="text" placeholder="Поиск" name="search">
+                    </form>
+                </div>
             </div>
         </div>
     </header>
