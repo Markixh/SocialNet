@@ -30,5 +30,6 @@ namespace SocialNet.Data.Models
             About = "Информация обо мне.";
         }
 
+        public List<User> Friends { get; set; }
     }
 }

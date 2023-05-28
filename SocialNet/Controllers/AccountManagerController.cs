@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SocialNet.Data.Models;
+using SocialNet.Data.Repositories;
 using SocialNet.Models;
 
 namespace SocialNet.Controllers
@@ -68,6 +70,22 @@ namespace SocialNet.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        [Route("MyPage")]
+        [HttpGet]
+        public async Task<IActionResult> MyPage()
+        {
+            var user = User;
+
+            var result = await _userManager.GetUserAsync(user);
+
+            var model = new UserViewModel(result);
+
+            //model.User.Friends = await GetAllFriend(model.User);
+
+            return View("User", model);
         }
     }
 }
