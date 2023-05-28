@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SocialNet.Data.Models;
 using SocialNet.Data.Repositories;
+using SocialNet.Extensions;
 using SocialNet.Models;
 
 namespace SocialNet.Controllers
@@ -53,7 +54,7 @@ namespace SocialNet.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("MyPage", "AccountManager");
                     }
                 }
                 else
@@ -111,7 +112,7 @@ namespace SocialNet.Controllers
             {
                 var user = await _userManager.FindByIdAsync(model.UserId);
 
-               
+                user.Convert(model);
 
                 var result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
