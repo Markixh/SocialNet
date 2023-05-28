@@ -1,3 +1,10 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using SocialNet.Data;
+using SocialNet.Data.Models;
+using System.Reflection;
+
 namespace SocialNet
 {
     public class Program
@@ -6,8 +13,23 @@ namespace SocialNet
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Подключаем автомаппинг
+            var assembly = Assembly.GetAssembly(typeof(MappingProfile));
+            builder.Services.AddAutoMapper(assembly);
+
+            // Строка подключения к БД
+            string? connection = Configuration.GetConnectionString("DefaultConnection");
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<SocialNetContext>(options => options.UseSqlServer(connection));
+            builder.Services.AddIdentity<User, IdentityRole>(opts => {
+                 opts.Password.RequiredLength = 5;
+                 opts.Password.RequireNonAlphanumeric = false;
+                 opts.Password.RequireLowercase = false;
+                 opts.Password.RequireUppercase = false;
+                 opts.Password.RequireDigit = false;
+             }).AddEntityFrameworkStores<SocialNetContext>();
 
             var app = builder.Build();
 
@@ -24,6 +46,7 @@ namespace SocialNet
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
@@ -32,5 +55,10 @@ namespace SocialNet
 
             app.Run();
         }
+
+        private static IConfiguration Configuration { get; } = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json")
+            .AddJsonFile("appsettings.Development.json")
+            .Build();
     }
 }
