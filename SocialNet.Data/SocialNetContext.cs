@@ -8,6 +8,7 @@ namespace SocialNet.Data
     {
         public SocialNetContext(DbContextOptions<SocialNetContext> options) : base(options)
         {
+            Database.EnsureDeleted();
             Database.EnsureCreated();
         }
     }
