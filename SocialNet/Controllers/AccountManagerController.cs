@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using SocialNet.Data.Models;
 using SocialNet.Data.Repositories;
 using SocialNet.Extensions;
@@ -135,11 +136,12 @@ namespace SocialNet.Controllers
         [HttpPost]
         public IActionResult UserList(string search)
         {
-            var currentuser = User;
+            if (search.IsNullOrEmpty()) search = string.Empty;
 
             var list = _userManager.Users.AsEnumerable().Where(x => x.GetFullName().ToLower().Contains(search.ToLower())).ToList();
 
             var data = new List<UserWithFriendExt>();
+
             list.ForEach(x =>
             {
                 var t = _mapper.Map<UserWithFriendExt>(x);                

@@ -10,7 +10,7 @@
 }
 @if (SignInManager.IsSignedIn(User))
 {
-    <div> Hello @User.Identity!</div>
+    <div> Hello @User.Identity.Name!</div>
 
 }
 else

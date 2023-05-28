@@ -1,6 +1,4 @@
-﻿using SocialNet.Data.Models;
-
-namespace SocialNet.Models
+﻿namespace SocialNet.Models
 {
     public class SearchViewModel
     {
