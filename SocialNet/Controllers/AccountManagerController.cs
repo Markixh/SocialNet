@@ -63,8 +63,7 @@ namespace SocialNet.Controllers
         }
 
         [Route("Logout")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();

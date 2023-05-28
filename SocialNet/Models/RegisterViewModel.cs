@@ -5,15 +5,15 @@ namespace SocialNet.Models
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "Имя")]
+        [Display(Name = "Имя", Prompt = "Введите Имя")]
         public string FirstName { get; set; }
 
         [Required]
-        [Display(Name = "Фамилия")]
+        [Display(Name = "Фамилия", Prompt = "Введите Фамилию")]
         public string LastName { get; set; }
 
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "Email", Prompt = "Введите Email")]
         public string EmailReg { get; set; }
 
         [Required]
@@ -30,7 +30,7 @@ namespace SocialNet.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Пароль")]
+        [Display(Name = "Пароль", Prompt = "Введите Пароль")]
         [StringLength(100, ErrorMessage = "Поле {0} должно иметь минимум {2} и максимум {1} символов.", MinimumLength = 5)]
         public string PasswordReg { get; set; }
 
@@ -41,7 +41,7 @@ namespace SocialNet.Models
         public string PasswordConfirm { get; set; }
 
         [Required]
-        [Display(Name = "Никнейм")]
+        [Display(Name = "Никнейм", Prompt = "Введите Никнейм")]
         public string Login { get; set; }
     }
 }
