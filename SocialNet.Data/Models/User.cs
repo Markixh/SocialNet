@@ -8,13 +8,14 @@ namespace SocialNet.Data.Models
 
         public string LastName { get; set; }
 
-        public string MiddleName { get; set; } = string.Empty;
+        public string MiddleName { get; set; }
 
         public DateTime BirthDate { get; set; }
 
         public string Image { get; set; }
 
         public string Status { get; set; }
+
 
         public string About { get; set; }
 
@@ -30,6 +31,5 @@ namespace SocialNet.Data.Models
             About = "Информация обо мне.";
         }
 
-        public List<User> Friends { get; set; }
     }
 }

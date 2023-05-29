@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using SocialNet.Data.Models;
 using SocialNet.Data.Repositories;
+using SocialNet.Data.UoW;
 using SocialNet.Extensions;
 using SocialNet.Models;
 
@@ -15,12 +16,14 @@ namespace SocialNet.Controllers
         private IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private IUnitOfWork _unitOfWork;
 
-        public AccountManagerController(IMapper mapper, UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountManagerController(IMapper mapper, UserManager<User> userManager, SignInManager<User> signInManager, IUnitOfWork unitOfWork)
         {
             _mapper = mapper;
             _userManager = userManager;
             _signInManager = signInManager;
+            _unitOfWork = unitOfWork;
         }
 
         [Route("Login")]
@@ -133,18 +136,27 @@ namespace SocialNet.Controllers
         }
 
         [Route("UserList")]
-        [HttpPost]
-        public IActionResult UserList(string search)
+        [HttpGet]
+        public async Task<IActionResult> UserList(string search)
         {
-            if (search.IsNullOrEmpty()) search = string.Empty;
+            var model = await CreateSearch(search);
+            return View("UserList", model);
+        }
+
+        private async Task<SearchViewModel> CreateSearch(string search)
+        {
+            var currentuser = User;
+
+            var result = await _userManager.GetUserAsync(currentuser);
 
             var list = _userManager.Users.AsEnumerable().Where(x => x.GetFullName().ToLower().Contains(search.ToLower())).ToList();
+            var withfriend = await GetAllFriend();
 
             var data = new List<UserWithFriendExt>();
-
             list.ForEach(x =>
             {
-                var t = _mapper.Map<UserWithFriendExt>(x);                
+                var t = _mapper.Map<UserWithFriendExt>(x);
+                t.IsFriendWithCurrent = withfriend.Where(y => y.Id == x.Id || x.Id == result.Id).Count() != 0;
                 data.Add(t);
             });
 
@@ -153,7 +165,36 @@ namespace SocialNet.Controllers
                 UserList = data
             };
 
-            return View("UserList", model);
+            return model;
+        }
+
+        private async Task<List<User>> GetAllFriend()
+        {
+            var user = User;
+
+            var result = await _userManager.GetUserAsync(user);
+
+            var repository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
+
+            return repository.GetFriendsByUser(result);
+        }
+
+        [Route("AddFriend")]
+        [HttpPost]
+        public async Task<IActionResult> AddFriend(string id)
+        {
+            var currentuser = User;
+
+            var result = await _userManager.GetUserAsync(currentuser);
+
+            var friend = await _userManager.FindByIdAsync(id);
+
+            var repository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
+
+            repository.AddFriend(result, friend);
+
+            return RedirectToAction("MyPage", "AccountManager");
+
         }
     }
 }

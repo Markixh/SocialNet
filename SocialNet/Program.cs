@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using SocialNet.Data;
 using SocialNet.Data.Models;
 using System.Reflection;
+using SocialNet.Extensions;
+using SocialNet.Data.Repositories;
 
 namespace SocialNet
 {
@@ -22,14 +23,18 @@ namespace SocialNet
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddDbContext<SocialNetContext>(options => options.UseSqlServer(connection));
-            builder.Services.AddIdentity<User, IdentityRole>(opts => {
-                 opts.Password.RequiredLength = 5;
-                 opts.Password.RequireNonAlphanumeric = false;
-                 opts.Password.RequireLowercase = false;
-                 opts.Password.RequireUppercase = false;
-                 opts.Password.RequireDigit = false;
-             }).AddEntityFrameworkStores<SocialNetContext>();
+
+            builder.Services
+                .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection))
+                .AddUnitOfWork()
+                .AddCustomRepository<Friend, FriendsRepository>()
+                .AddIdentity<User, IdentityRole>(opts => {
+                    opts.Password.RequiredLength = 5;
+                    opts.Password.RequireNonAlphanumeric = false;
+                    opts.Password.RequireLowercase = false;
+                    opts.Password.RequireUppercase = false;
+                    opts.Password.RequireDigit = false;
+                }).AddEntityFrameworkStores<ApplicationDbContext>();
 
             var app = builder.Build();
 

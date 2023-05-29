@@ -1,4 +1,4 @@
-﻿namespace SocialNet.Data.Repositories
+﻿namespace SocialNet.Data.UoW
 {
     public interface IUnitOfWork : IDisposable
     {
