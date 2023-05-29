@@ -10,5 +10,7 @@ namespace SocialNet.Models
         {
             User = user;
         }
+
+        public List<User> Friends { get; set; }
     }
 }

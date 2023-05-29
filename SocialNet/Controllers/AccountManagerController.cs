@@ -88,9 +88,27 @@ namespace SocialNet.Controllers
 
             var model = new UserViewModel(result);
 
-            //model.User.Friends = await GetAllFriend(model.User);
+            model.Friends = await GetAllFriend(model.User);
 
             return View("User", model);
+        }
+
+        private async Task<List<User>> GetAllFriend(User user)
+        {
+            var repository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
+
+            return repository.GetFriendsByUser(user);
+        }
+
+        private async Task<List<User>> GetAllFriend()
+        {
+            var user = User;
+
+            var result = await _userManager.GetUserAsync(user);
+
+            var repository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
+
+            return repository.GetFriendsByUser(result);
         }
 
         [Authorize]
@@ -166,17 +184,6 @@ namespace SocialNet.Controllers
             };
 
             return model;
-        }
-
-        private async Task<List<User>> GetAllFriend()
-        {
-            var user = User;
-
-            var result = await _userManager.GetUserAsync(user);
-
-            var repository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
-
-            return repository.GetFriendsByUser(result);
         }
 
         [Route("AddFriend")]
