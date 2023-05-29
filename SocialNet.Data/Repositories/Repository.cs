@@ -11,11 +11,7 @@ namespace SocialNet.Data.Repositories
     {
         protected DbContext _db;
 
-        public DbSet<T> Set
-        {
-            get;
-            private set;
-        }
+        public DbSet<T> Set { get; private set; }
 
         public Repository(ApplicationDbContext db)
         {

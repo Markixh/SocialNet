@@ -10,6 +10,7 @@ namespace SocialNet.Data.Repositories
 
         }
 
+
         public void AddFriend(User target, User Friend)
         {
             var friends = Set.AsEnumerable().FirstOrDefault(x => x.UserId == target.Id && x.CurrentFriendId == Friend.Id);
@@ -34,6 +35,7 @@ namespace SocialNet.Data.Repositories
 
             return friends.ToList();
         }
+
 
         public void DeleteFriend(User target, User Friend)
         {
