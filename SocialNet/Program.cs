@@ -24,10 +24,7 @@ namespace SocialNet
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            builder.Services
-                .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection))
-                .AddUnitOfWork()
-                .AddCustomRepository<Friend, FriendsRepository>()
+            builder.Services               
                 .AddIdentity<User, IdentityRole>(opts => {
                     opts.Password.RequiredLength = 5;
                     opts.Password.RequireNonAlphanumeric = false;
@@ -35,6 +32,11 @@ namespace SocialNet
                     opts.Password.RequireUppercase = false;
                     opts.Password.RequireDigit = false;
                 }).AddEntityFrameworkStores<ApplicationDbContext>();
+
+            builder.Services
+                .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection))
+                .AddUnitOfWork()
+                .AddCustomRepository<Friend, FriendsRepository>();
 
             var app = builder.Build();
 
