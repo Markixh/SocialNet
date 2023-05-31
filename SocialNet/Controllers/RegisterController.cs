@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SocialNet.Data.Models;
-using SocialNet.Models;
+using SocialNet.ViewModels.Account;
 
 namespace SocialNet.Controllers
 {

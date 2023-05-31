@@ -1,6 +1,6 @@
 ﻿using SocialNet.Data.Models;
 
-namespace SocialNet.Models
+namespace SocialNet.ViewModels.Account
 {
     public class ChatViewModel
     {

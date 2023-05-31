@@ -1,4 +1,4 @@
-﻿namespace SocialNet.Models
+﻿namespace SocialNet.ViewModels.Account
 {
     public class MessageViewModel
     {

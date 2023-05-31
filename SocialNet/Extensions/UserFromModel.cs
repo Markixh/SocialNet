@@ -1,5 +1,5 @@
 ﻿using SocialNet.Data.Models;
-using SocialNet.Models;
+using SocialNet.ViewModels.Account;
 
 namespace SocialNet.Extensions
 {

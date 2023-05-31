@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SocialNet.Models;
+using SocialNet.ViewModels.Account;
 using System.Diagnostics;
 
 namespace SocialNet.Controllers

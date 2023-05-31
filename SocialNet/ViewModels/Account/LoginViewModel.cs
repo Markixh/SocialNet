@@ -1,7 +1,7 @@
 ﻿using SocialNet.Data.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace SocialNet.Models
+namespace SocialNet.ViewModels.Account
 {
     public class LoginViewModel
     {

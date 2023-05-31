@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using SocialNet.Data.Models;
 using SocialNet.Data.Repositories;
 using SocialNet.Data.UoW;
 using SocialNet.Extensions;
 using SocialNet.Models;
+using SocialNet.ViewModels.Account;
 
 namespace SocialNet.Controllers
 {

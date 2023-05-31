@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SocialNet.Models
+namespace SocialNet.ViewModels.Account
 {
     public class UserEditViewModel
     {
