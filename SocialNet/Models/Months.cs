@@ -9,19 +9,19 @@ namespace SocialNet.Models
         [Display(Name = "Февраль")]
         Feb,
         [Display(Name = "Март")]
-        Mar,
+        March,
         [Display(Name = "Апрель")]
-        Apr,
+        April,
         [Display(Name = "Май")]
         May,
         [Display(Name = "Июнь")]
-        Jun,
+        June,
         [Display(Name = "Июль")]
-        Jul,
+        July,
         [Display(Name = "Август")]
         Aug,
         [Display(Name = "Сентябрь")]
-        Sep,
+        Sept,
         [Display(Name = "Октябрь")]
         Oct,
         [Display(Name = "Ноябрь")]

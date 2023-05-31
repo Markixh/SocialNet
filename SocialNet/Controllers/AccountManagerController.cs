@@ -70,7 +70,8 @@ namespace SocialNet.Controllers
         }
 
         [Route("Logout")]
-        [HttpGet]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
@@ -226,10 +227,17 @@ namespace SocialNet.Controllers
         [HttpPost]
         public async Task<IActionResult> Chat(string id)
         {
+            var model = await GenerateChat(id);
+            return View("Chat", model);
+        }
+
+        private async Task<ChatViewModel> GenerateChat(string id)
+        {
             var currentuser = User;
 
             var result = await _userManager.GetUserAsync(currentuser);
             var friend = await _userManager.FindByIdAsync(id);
+
 
             var repository = _unitOfWork.GetRepository<Message>() as MessagesRepository;
 
@@ -241,6 +249,18 @@ namespace SocialNet.Controllers
                 ToWhom = friend,
                 History = mess.OrderBy(x => x.Id).ToList(),
             };
+
+            return model;
+        }
+
+        [Route("Chat")]
+        [HttpGet]
+        public async Task<IActionResult> Chat()
+        {
+
+            var id = Request.Query["id"];
+
+            var model = await GenerateChat(id);
             return View("Chat", model);
         }
 

@@ -1,8 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity;
 @using SocialNet.Data.Models;
-@inject SignInManager<User> SignInManager
+@inject SignInManager<User> SignInManager;
 @inject UserManager<User> UserManager;
-
 
 @{
     ViewData["Title"] = "Home Page";
@@ -11,12 +10,9 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <div> Hello @User.Identity.Name!</div>
-
 }
 else
 {
-
-
     <div class="row">
         <div class="side">
             <div class="center">
