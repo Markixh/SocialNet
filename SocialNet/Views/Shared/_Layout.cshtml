@@ -22,12 +22,16 @@
             <div class="topnav">
                 @if (!SignInManager.IsSignedIn(User))
                 {
-                    <a asp-area="" asp-controller="Home" asp-action="Index">SocialNetwork</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Index">
+                        <img src="~/img/logo.png" width="150" height="70"/>
+                    </a>
                 }
                 else
 
                 {
-                    <a asp-area="" asp-controller="AccountManager" asp-action="MyPage">SocialNetwork</a>
+                    <a asp-area="" asp-controller="AccountManager" asp-action="MyPage">
+                        <img src="~/img/logo.png" width="150" height="70" />
+                    </a>
                 }
                 <partial name="_LoginPartial.cshtml" />
                 <partial name="_SearchLayoutPartial.cshtml" />
