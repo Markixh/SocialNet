@@ -22,17 +22,6 @@
                     @user.About
                 </div>
 
-                <div class="mrgn center-align">
-                    
-                    @if (!@user.IsFriendWithCurrent)
-                    {
-                        <form asp-controller="AccountManager" asp-action="AddFriend" asp-route-id="@user.Id" method="post">
-                            <button type="submit" class="btn btn-sm btn-primary">
-                                Добавить в друзья
-                            </button>
-                        </form>
-                    }
-                </div>
             </div>
         }
     }

@@ -194,7 +194,11 @@ namespace SocialNet.Controllers
         [HttpGet]
         public async Task<IActionResult> UserList(string search)
         {
+            var user = User;
+            var result = await _userManager.GetUserAsync(user);
             var model = await CreateSearch(search);
+
+            if (result == null) return View("UserListNoButton", model);           
             return View("UserList", model);
         }
 
