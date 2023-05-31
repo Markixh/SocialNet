@@ -1,13 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SocialNet.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SocialNet.Data.Repositories
 {
+    /// <summary>
+    /// Репозиторий для обработки сообщений
+    /// </summary>
     public class MessagesRepository : Repository<Message>
     {
         public MessagesRepository(ApplicationDbContext db) : base(db)
@@ -15,6 +13,12 @@ namespace SocialNet.Data.Repositories
 
         }
 
+        /// <summary>
+        /// Получение сообщений
+        /// </summary>
+        /// <param name="sender">Получатель сообщений</param>
+        /// <param name="recipient">Отправитель сообщений</param>
+        /// <returns></returns>
         public List<Message> GetMessages(User sender, User recipient)
         {
             Set.Include(x => x.Recipient);

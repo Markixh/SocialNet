@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace SocialNet.Data.Repositories
 {
+    /// <summary>
+    /// Универсальный репозиторий
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class Repository<T> : IRepository<T> where T : class
     {
         protected DbContext _db;

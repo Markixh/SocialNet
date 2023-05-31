@@ -2,6 +2,9 @@
 
 namespace SocialNet.Data.Models
 {
+    /// <summary>
+    /// Пользователь
+    /// </summary>
     public class User : IdentityUser
     {
         public string FirstName { get; set; }

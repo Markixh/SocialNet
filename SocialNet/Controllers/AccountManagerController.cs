@@ -6,7 +6,6 @@ using SocialNet.Data.Models;
 using SocialNet.Data.Repositories;
 using SocialNet.Data.UoW;
 using SocialNet.Extensions;
-using SocialNet.Models;
 using SocialNet.ViewModels.Account;
 
 namespace SocialNet.Controllers
@@ -26,6 +25,10 @@ namespace SocialNet.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        /// <summary>
+        /// Страница для Аутентификаации пользователя
+        /// </summary>
+        /// <returns></returns>
         [Route("Login")]
         [HttpGet]
         public IActionResult Login()
@@ -39,6 +42,11 @@ namespace SocialNet.Controllers
             return View(new LoginViewModel { ReturnUrl = returnUrl });
         }
 
+        /// <summary>
+        /// Обработка данный для аутентификации
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [Route("Login")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -69,6 +77,10 @@ namespace SocialNet.Controllers
             return View("Views/Home/Index.cshtml");
         }
 
+        /// <summary>
+        /// Выход с сайта
+        /// </summary>
+        /// <returns></returns>
         [Route("Logout")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -78,6 +90,10 @@ namespace SocialNet.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        /// <summary>
+        /// Профиль пользователя
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         [Route("MyPage")]
         [HttpGet]
@@ -94,6 +110,11 @@ namespace SocialNet.Controllers
             return View("User", model);
         }
 
+        /// <summary>
+        /// Получить информацию о друзьях в БД
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         private async Task<List<User>> GetAllFriend(User user)
         {
             var repository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
@@ -112,6 +133,10 @@ namespace SocialNet.Controllers
             return repository.GetFriendsByUser(result);
         }
 
+        /// <summary>
+        /// Страница по редактированию информации о пользователе
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         [Route("Edit")]
         [HttpGet]
@@ -126,6 +151,11 @@ namespace SocialNet.Controllers
             return View("Edit", editmodel);
         }
 
+        /// <summary>
+        /// Сохранение ихменений по пользователю
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [Authorize]
         [Route("Update")]
         [HttpPost]
@@ -154,6 +184,11 @@ namespace SocialNet.Controllers
             }
         }
 
+        /// <summary>
+        /// Получить список пользователей по тексту
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns></returns>
         [Route("UserList")]
         [HttpGet]
         public async Task<IActionResult> UserList(string search)
@@ -162,6 +197,11 @@ namespace SocialNet.Controllers
             return View("UserList", model);
         }
 
+        /// <summary>
+        /// Поиск пользователя
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns></returns>
         private async Task<SearchViewModel> CreateSearch(string search)
         {
             var currentuser = User;
@@ -187,6 +227,11 @@ namespace SocialNet.Controllers
             return model;
         }
 
+        /// <summary>
+        /// Запрос по добавлению в друзья
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Route("AddFriend")]
         [HttpPost]
         public async Task<IActionResult> AddFriend(string id)
@@ -205,6 +250,11 @@ namespace SocialNet.Controllers
 
         }
 
+        /// <summary>
+        /// Запрос по удалению друга
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Route("DeleteFriend")]
         [HttpPost]
         public async Task<IActionResult> DeleteFriend(string id)
@@ -223,6 +273,11 @@ namespace SocialNet.Controllers
 
         }
 
+        /// <summary>
+        /// Запрос для отправления сообщения
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Route("Chat")]
         [HttpPost]
         public async Task<IActionResult> Chat(string id)
@@ -231,6 +286,11 @@ namespace SocialNet.Controllers
             return View("Chat", model);
         }
 
+        /// <summary>
+        /// Получение сообщений для чата
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private async Task<ChatViewModel> GenerateChat(string id)
         {
             var currentuser = User;
@@ -253,6 +313,10 @@ namespace SocialNet.Controllers
             return model;
         }
 
+        /// <summary>
+        /// Чат
+        /// </summary>
+        /// <returns></returns>
         [Route("Chat")]
         [HttpGet]
         public async Task<IActionResult> Chat()
@@ -263,7 +327,12 @@ namespace SocialNet.Controllers
             var model = await GenerateChat(id);
             return View("Chat", model);
         }
-
+        /// <summary>
+        /// Новое сообщение
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="chat"></param>
+        /// <returns></returns>
         [Route("NewMessage")]
         [HttpPost]
         public async Task<IActionResult> NewMessage(string id, ChatViewModel chat)

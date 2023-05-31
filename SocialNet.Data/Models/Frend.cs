@@ -1,5 +1,8 @@
 ﻿namespace SocialNet.Data.Models
 {
+    /// <summary>
+    /// Объект - для хранения друзей
+    /// </summary>
     public class Friend
     {
         public int Id { get; set; }

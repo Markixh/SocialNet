@@ -1,5 +1,8 @@
 ﻿namespace SocialNet.Data.Models
 {
+    /// <summary>
+    /// Объект для хранения сообщений
+    /// </summary>
     public class Message
     {
         public int Id { get; set; }
