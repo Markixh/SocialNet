@@ -9,7 +9,7 @@
 }
 @if (SignInManager.IsSignedIn(User))
 {
-    <div> Hello @User.Identity.Name!</div>
+    <a asp-area="" asp-controller="AccountManager" asp-action="MyPage">SocialNetwork</a>
 }
 else
 {
