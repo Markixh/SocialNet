@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using SocialNet.Data.Models;
 using SocialNet.Data.Repositories;
 using SocialNet.Data.UoW;
@@ -208,6 +209,8 @@ namespace SocialNet.Controllers
 
             var result = await _userManager.GetUserAsync(currentuser);
 
+            if (search.IsNullOrEmpty()) search = "";
+
             var list = _userManager.Users.AsEnumerable().Where(x => x.GetFullName().ToLower().Contains(search.ToLower())).ToList();
             var withfriend = await GetAllFriend();
 
@@ -361,6 +364,25 @@ namespace SocialNet.Controllers
                 History = mess.OrderBy(x => x.Id).ToList(),
             };
             return View("Chat", model);
+        }
+
+        [Route("Generate")]
+        [HttpGet]
+        public async Task<IActionResult> Generate()
+        {
+
+            var usergen = new GenerateUsers();
+            var userlist = usergen.Populate(10);
+
+            foreach (var user in userlist)
+            {
+                var result = await _userManager.CreateAsync(user, "123456");
+
+                if (!result.Succeeded)
+                    continue;
+            }
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
